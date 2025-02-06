@@ -1,3 +1,7 @@
+<?php
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Controller/LoginController.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,14 +39,15 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Crear Cuenta</h1>
                             </div>
-                            <form class="user">
+                            <form action="" method="POST" class="user">
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user"
-                                    placeholder="Identificación" id="txtIdentificacion" name="txtIdentificacion">
+                                    placeholder="Identificación" id="txtIdentificacion" name="txtIdentificacion"
+                                    onkeyup="ConsultarNombre()">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user"
-                                        placeholder="Nombre" id="txtNombre" name="txtNombre">
+                                        placeholder="Nombre" id="txtNombre" name="txtNombre" readonly>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user"
@@ -76,6 +81,7 @@
     <script src="../Scripts/bootstrap.bundle.min.js"></script>
     <script src="../Scripts/jquery.easing.min.js"></script>
     <script src="../Scripts/sb-admin-2.min.js"></script>
+    <script src="../Scripts/comunes.js"></script>
 
 </body>
 

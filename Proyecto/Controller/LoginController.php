@@ -8,4 +8,17 @@ if(isset($_POST["btnIniciarSesion"]))
     header('location: ../../View/Login/home.php');
 }
 
+if(isset($_POST["btnRegistrarCuenta"]))
+{
+    /**/
+    $Identificacion=$_POST["txtIdentificacion"];
+    $nombre=$_POST["txtNombre"];
+    $correo=$_POST["txtCorreo"];
+    $contrasenna=$_POST["txtxontrasenna"];
+    
+    $resultado = btnRegistrarCuentaModel();
+
+    header('location: ../../View/Login/login.php');
+}
+
 ?>
