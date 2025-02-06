@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Proyecto MN</title>
+    <title>Proyecto M.N</title>
     <link href="../Styles/all.min.css" rel="stylesheet" type="text/css">
     <link href="../Styles/sb-admin-2.min.css" rel="stylesheet">
     <link href="../Styles/ui.css" rel="stylesheet">
@@ -39,6 +39,14 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Crear Cuenta</h1>
                             </div>
+
+                            <?php
+                                if(isset($_POST["Message"]))
+                                {
+                                    echo $_POST["Message"];
+                                }
+                            ?>
+                            
                             <form action="" method="POST" class="user">
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user"
@@ -60,6 +68,7 @@
                                 <input type="submit" class="btn btn-danger btn-user btn-block" value="Procesar"
                                         id="btnRegistrarCuenta" name="btnRegistrarCuenta" >
                             </form>
+
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="recuperarContrasenna.php">Recuperar Contraseña</a>

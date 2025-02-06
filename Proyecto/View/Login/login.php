@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Proyecto MN</title>
+    <title>Proyecto M.N</title>
     <link href="../Styles/all.min.css" rel="stylesheet" type="text/css">
     <link href="../Styles/sb-admin-2.min.css" rel="stylesheet">
     <link href="../Styles/ui.css" rel="stylesheet">
@@ -39,6 +39,13 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Proyecto MN</h1>
                                     </div>
+
+                                    <?php
+                                        if(isset($_POST["Message"]))
+                                        {
+                                            echo $_POST["Message"];
+                                        }
+                                    ?>
 
                                     <form action="" method="POST" class="user">
                                         <div class="form-group">
