@@ -1,5 +1,5 @@
 <?php
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/Proyecto/Model/BaseDatosModel.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Model/BaseDatosModel.php";
 
     function RegistrarCuentaModel($identificacion,$nombre,$correo,$contrasenna)
     {
