@@ -1,6 +1,11 @@
 <?php
     include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Model/LoginModel.php";
 
+    if(session_status()==PHP_SESSION_NOME)
+    {
+        session_start();
+    }
+
     if(isset($_POST["btnRegistrarCuenta"]))
     {
         $identificacion = $_POST["txtIdentificacion"];
@@ -29,12 +34,21 @@
 
         if($resultado != null && $resultado -> num_rows > 0)
         {
+            $datos = mysqli_fetch_array($resultado);
+            $_SESSION["NombreUsuario"] =  $datos["Nombre"];
+
             header('location: ../../View/Login/home.php');
         }
         else
         {
             $_POST["Message"] = "Su información no fue validada correctamente";
         }
+    }
+
+    if(isset($_POST["btnSalir"]))
+    {
+        session_destroy();
+        
     }
 
 ?>
