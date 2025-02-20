@@ -1,8 +1,7 @@
 <?php
     include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Model/LoginModel.php";
 
-    if(session_status()==PHP_SESSION_NOME)
-    {
+    if(session_status() == PHP_SESSION_NONE){
         session_start();
     }
 
@@ -35,7 +34,7 @@
         if($resultado != null && $resultado -> num_rows > 0)
         {
             $datos = mysqli_fetch_array($resultado);
-            $_SESSION["NombreUsuario"] =  $datos["Nombre"];
+            $_SESSION["NombreUsuario"] = $datos["Nombre"];
 
             header('location: ../../View/Login/home.php');
         }
@@ -48,7 +47,7 @@
     if(isset($_POST["btnSalir"]))
     {
         session_destroy();
-        
+        header('location: ../../View/Login/login.php');
     }
 
 ?>

@@ -1,7 +1,16 @@
 <?php
 
+    if(session_status() == PHP_SESSION_NONE){
+        session_start();
+    }
+
     function BarraNavegacion()
-    { 
+    {
+        $usuario = "";
+        if(isset($_SESSION["NombreUsuario"]))
+        {
+            $usuario = $_SESSION["NombreUsuario"];
+        }
 
         echo '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -30,11 +39,14 @@
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Seguridad
                                 </a>
+
                                 <div class="dropdown-divider"></div>
+
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Salir
                                 </a>
+                                
                             </div>
                         </li>
 
