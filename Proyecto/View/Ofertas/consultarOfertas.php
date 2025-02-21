@@ -1,7 +1,7 @@
 <?php
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Controller/LoginController.php"";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Controller/OfertasController.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/View/layoutInterno.php";
-    ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,9 +18,36 @@
             <div id="content">
 
                 <?php BarraNavegacion(); ?>
-               
+
                 <div class="container-fluid">
 
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Puesto</th>
+                                <th>Descripción</th>
+                                <th>Salario</th>
+                                <th>Horario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $datos = ConsultarOfertas();
+
+                                while($row = mysqli_fetch_array($datos))
+                                {
+                                    echo "<tr>";
+                                    echo "<td>" . $row["Id"] . "</td>";
+                                    echo "<td>" . $row["Nombre"] . "</td>";
+                                    echo "<td>" . $row["Descripcion"] . "</td>";
+                                    echo "<td>" . $row["Salario"] . "</td>";
+                                    echo "<td>" . $row["Horario"] . "</td>";
+                                    echo "</tr>";
+                                }
+                            ?>
+                        </tbody>
+                    </table>
 
                 </div>
             </div>
@@ -48,7 +75,8 @@
                 <div class="modal-body">Presione el botón Salir para finalizar su sesión actual</div>
                 <div class="modal-footer">
                     <form action="" method="POST">
-                        <input type="submit" class="btn btn-primary" id="btnSalir" name="btnSalir" value="Salir"></input>
+                        <input type="submit" class="btn btn-primary" id="btnSalir" name="btnSalir"
+                            value="Salir"></input>
                     </form>
                 </div>
             </div>
