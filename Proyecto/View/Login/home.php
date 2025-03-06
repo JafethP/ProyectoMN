@@ -1,5 +1,5 @@
 <?php
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Controller/LoginController.php"";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Controller/LoginController.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/View/layoutInterno.php";
     ?>
 
