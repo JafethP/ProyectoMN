@@ -21,6 +21,10 @@
 
                 <div class="container-fluid">
 
+                <div style="text-align:right; margin:10px;">
+                    <a class="btn btn-outline-primary" href="agregarOfertas.php"><i class="fa fa-plus"></i> Agregar </a>
+                </div>
+
                     <table class="table">
                         <thead>
                             <tr>
@@ -29,6 +33,7 @@
                                 <th>Descripción</th>
                                 <th>Salario</th>
                                 <th>Horario</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,6 +48,7 @@
                                     echo "<td>" . $row["Descripcion"] . "</td>";
                                     echo "<td>" . $row["Salario"] . "</td>";
                                     echo "<td>" . $row["Horario"] . "</td>";
+                                    echo "<td><a href='actualizarOfertas.php?q=" . $row["Id"] . "'><i class='fa fa-edit'></i></td>";
                                     echo "</tr>";
                                 }
                             ?>
