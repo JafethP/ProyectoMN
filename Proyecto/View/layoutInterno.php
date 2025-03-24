@@ -1,4 +1,5 @@
 <?php
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Controller/LoginController.php";
 
     if(session_status() == PHP_SESSION_NONE){
         session_start();
@@ -39,21 +40,25 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Perfil
+                                
+                                <a class="dropdown-item" href="../Usuario/actualizarDatos.php">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400 AlineacionOpciones"></i>
+                                    Actualizar Datos
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Seguridad
+
+                                <a class="dropdown-item" href="../Usuario/cambiarAcceso.php">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400 AlineacionOpciones"></i>
+                                    Cambiar Contraseña
                                 </a>
 
                                 <div class="dropdown-divider"></div>
 
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Salir
-                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <form action="" method="POST">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        <input class="AlineacionOpcionesSalir" id="btnSalir" name="btnSalir" type="submit" value="Salir">
+                                    </form>
+                                </a>                       
                                 
                             </div>
                         </li>
@@ -67,7 +72,7 @@
     {
         echo '<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../Login/home.php">
             <div class="sidebar-brand-text mx-3">Proyecto MN</div>
         </a>
 
@@ -90,9 +95,9 @@
         else
         {
             echo '<li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="../Ofertas/consultarOfertasDisponibles.php">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Ofertas</span></a>
+                        <span>Ofertas Disponibles</span></a>
                 </li>';
         }
 
@@ -117,7 +122,9 @@
                 <title>Proyecto MN</title>
                 <link href="../Styles/all.min.css" rel="stylesheet" type="text/css">
                 <link href="../Styles/sb-admin-2.min.css" rel="stylesheet">
+                <link href="../Styles/ui.css" rel="stylesheet">
                 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+                <link href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap4.css" rel="stylesheet">
             </head>';   
     }
 
@@ -126,7 +133,10 @@
         echo '<script src="../Scripts/jquery.min.js"></script>
               <script src="../Scripts/bootstrap.bundle.min.js"></script>
               <script src="../Scripts/jquery.easing.min.js"></script>
-              <script src="../Scripts/sb-admin-2.min.js"></script>';
+              <script src="../Scripts/sb-admin-2.min.js"></script>
+              <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+              <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap4.js"></script>
+              <script src="../Scripts/comunes.js"></script>';
     }
 
     function PrintFooter()

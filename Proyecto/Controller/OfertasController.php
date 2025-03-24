@@ -1,9 +1,9 @@
 <?php
     include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Model/OfertasModel.php";
 
-    function ConsultarOfertas()
+    function ConsultarOfertas($estado)
     {
-        return ConsultarOfertasModel();
+        return ConsultarOfertasModel($estado);
     }
 
     function ConsultarOferta($id)
@@ -36,8 +36,9 @@
         $puesto = $_POST["txtPuesto"];
         $salario = $_POST["txtSalario"];
         $horario = $_POST["txtHorario"];
+        $estado = $_POST["txtEstado"];
 
-        $resultado = ActualizarOfertaModel($id,$puesto,$salario,$horario);
+        $resultado = ActualizarOfertaModel($id,$puesto,$salario,$horario,$estado);
 
         if($resultado == true)
         {

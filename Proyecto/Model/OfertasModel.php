@@ -1,13 +1,13 @@
 <?php
     include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Model/BaseDatosModel.php";
 
-    function ConsultarOfertasModel()
+    function ConsultarOfertasModel($estado)
     {
         try
         {
             $context = AbrirBaseDatos();
 
-            $sentencia = "CALL SP_ConsultarOfertas()";
+            $sentencia = "CALL SP_ConsultarOfertas('$estado')";
             $resultado = $context -> query($sentencia);
     
             CerrarBaseDatos($context);
@@ -55,13 +55,13 @@
         }        
     }    
 
-    function ActualizarOfertaModel($Id,$puesto,$salario,$horario)
+    function ActualizarOfertaModel($Id,$puesto,$salario,$horario,$estado)
     {
         try 
         {
             $context = AbrirBaseDatos();
 
-            $sentencia = "CALL SP_ActualizarOferta('$Id','$puesto','$salario','$horario')";
+            $sentencia = "CALL SP_ActualizarOferta('$Id','$puesto','$salario','$horario','$estado')";
             $resultado = $context -> query($sentencia);
 
             CerrarBaseDatos($context);
@@ -72,4 +72,5 @@
             return false;
         }        
     } 
+
     ?>

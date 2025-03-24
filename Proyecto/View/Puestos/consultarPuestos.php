@@ -21,12 +21,19 @@
 
                 <div class="container-fluid">
 
-                    <table class="table">
+                <h5>Consulta de Puestos</h5>
+
+                <div style="text-align:right; margin:10px;">
+                    <a class="btn btn-outline-primary" href="agregarPuestos.php"><i class="fa fa-plus"></i> Agregar </a>
+                </div>
+
+                    <table id="example" class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
                                 <th>Descripción</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,6 +46,7 @@
                                     echo "<td>" . $row["Id"] . "</td>";
                                     echo "<td>" . $row["Nombre"] . "</td>";
                                     echo "<td>" . $row["Descripcion"] . "</td>";
+                                    echo "<td><a href='actualizarPuestos.php?q=" . $row["Id"] . "'><i class='fa fa-edit'></i></td>";
                                     echo "</tr>";
                                 }
                             ?>
@@ -58,28 +66,21 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Desea salir del sistema?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">X</span>
-                    </button>
-                </div>
-                <div class="modal-body">Presione el botón Salir para finalizar su sesión actual</div>
-                <div class="modal-footer">
-                    <form action="" method="POST">
-                        <input type="submit" class="btn btn-primary" id="btnSalir" name="btnSalir"
-                            value="Salir"></input>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <?php PrintScript(); ?>
+    <script>
+    
+        $(document).ready(function() {
+            var table = new DataTable('#example', {
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json',
+                },
+                columnDefs: [
+                    { targets: "_all", className: "dt-left" }
+                ]
+            });
+        });
+
+    </script>
 
 </body>
 
