@@ -6,6 +6,11 @@
         return ConsultarOfertasModel($estado);
     }
 
+    function ConsultarOfertasPopulares()
+    {
+        return ConsultarOfertasPopularesModel();
+    }
+
     function ConsultarOferta($id)
     {
         $resultado = ConsultarOfertaModel($id);
@@ -17,8 +22,13 @@
         $puesto = $_POST["txtPuesto"];
         $salario = $_POST["txtSalario"];
         $horario = $_POST["txtHorario"];
+        $imagen = '../Img/' . $_FILES["txtImagen"]["name"];
 
-        $resultado = CrearOfertaModel($puesto,$salario,$horario);
+        $origen = $_FILES["txtImagen"]["tmp_name"];
+        $destino = $_SERVER["DOCUMENT_ROOT"] . '/Proyecto/View/Img/' . $_FILES["txtImagen"]["name"];
+        copy($origen,$destino);
+
+        $resultado = CrearOfertaModel($puesto,$salario,$horario,$imagen);
 
         if($resultado == true)
         {
@@ -37,8 +47,18 @@
         $salario = $_POST["txtSalario"];
         $horario = $_POST["txtHorario"];
         $estado = $_POST["txtEstado"];
+        $imagen = "";
 
-        $resultado = ActualizarOfertaModel($id,$puesto,$salario,$horario,$estado);
+        if($_FILES["txtImagen"]["name"] != "")
+        {
+            $imagen = '../Img/' . $_FILES["txtImagen"]["name"]; 
+
+            $origen = $_FILES["txtImagen"]["tmp_name"];
+            $destino = $_SERVER["DOCUMENT_ROOT"] . '/Proyecto/View/Img/' . $_FILES["txtImagen"]["name"];
+            copy($origen,$destino);
+        }
+
+        $resultado = ActualizarOfertaModel($id,$puesto,$salario,$horario,$estado,$imagen);
 
         if($resultado == true)
         {

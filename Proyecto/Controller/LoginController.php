@@ -5,6 +5,10 @@
         session_start();
     }
 
+    if(session_status() == PHP_SESSION_NONE){
+        session_start();
+    }
+
     if(isset($_POST["btnRegistrarCuenta"]))
     {
         $identificacion = $_POST["txtIdentificacion"];

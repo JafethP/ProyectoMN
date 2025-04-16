@@ -1,5 +1,5 @@
 <?php
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Controller/OfertasController.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/Controller/OfertasUsuarioController.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/ProyectoMN/Proyecto/View/layoutInterno.php";
 ?>
 
@@ -21,11 +21,9 @@
 
                 <div class="container-fluid">
 
-                <h5>Consulta de Ofertas</h5>
+                <h5>Consulta de Ofertas Aplicadas</h5>
 
-                <div style="text-align:right; margin:10px;">
-                    <a class="btn btn-outline-primary" href="agregarOfertas.php"><i class="fa fa-plus"></i> Agregar </a>
-                </div>
+                <br/><br/>
 
                 <?php
                                         if(isset($_POST["Message"]))
@@ -39,25 +37,25 @@
                             <tr>
                                 <th>#</th>
                                 <th>Puesto</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
                                 <th>Salario</th>
                                 <th>Horario</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                                $datos = ConsultarOfertas(false);
+                                $datos = ConsultarOfertasUsuario($_SESSION["IdUsuario"]);
 
                                 while($row = mysqli_fetch_array($datos))
                                 {
                                     echo "<tr>";
-                                    echo "<td>" . $row["Id"] . "</td>";
+                                    echo "<td>" . $row["IdOferta"] . "</td>";
                                     echo "<td>" . $row["Nombre"] . "</td>";
-                                    echo "<td> $ " . $row["Salario"] . "</td>";
-                                    echo "<td>" . $row["Horario"] . "</td>";
+                                    echo "<td>" .  date('d/m/Y H:i', strtotime($row["Fecha"])) . "</td>";
                                     echo "<td>" . $row["DescripcionEstado"] . "</td>";
-                                    echo "<td><a href='actualizarOfertas.php?q=" . $row["Id"] . "'><i class='fa fa-edit'></i></td>";
+                                    echo "<td> $ " . $row["Salario"] . "</td>";
+                                    echo "<td>" . $row["Horario"] . "</td>";                                    
                                     echo "</tr>";
                                 }
                             ?>

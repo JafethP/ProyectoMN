@@ -18,6 +18,30 @@ USE `mn_database`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `estados`
+--
+
+DROP TABLE IF EXISTS `estados`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `estados` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Descripcion` varchar(200) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estados`
+--
+
+LOCK TABLES `estados` WRITE;
+/*!40000 ALTER TABLE `estados` DISABLE KEYS */;
+INSERT INTO `estados` VALUES (1,'En Proceso'),(2,'En Entrevista'),(3,'Contratado'),(4,'Rechazado'),(5,'Archivado');
+/*!40000 ALTER TABLE `estados` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `oferta`
 --
 
@@ -30,10 +54,11 @@ CREATE TABLE `oferta` (
   `Salario` decimal(10,2) NOT NULL,
   `Horario` varchar(255) NOT NULL,
   `Estado` bit(1) DEFAULT NULL,
+  `Imagen` varchar(2500) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `FK_OfertaPuesto` (`IdPuesto`),
   CONSTRAINT `FK_OfertaPuesto` FOREIGN KEY (`IdPuesto`) REFERENCES `puesto` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +67,7 @@ CREATE TABLE `oferta` (
 
 LOCK TABLES `oferta` WRITE;
 /*!40000 ALTER TABLE `oferta` DISABLE KEYS */;
-INSERT INTO `oferta` VALUES (1,1,3500.00,'Lunes a Viernes de 8:00 a 17:00',_binary '\0'),(2,4,2350.00,'Lunes a Viernes de 08:00 am - 02:00 pm',_binary ''),(3,5,4250.00,'Lunes a Viernes',_binary '\0');
+INSERT INTO `oferta` VALUES (4,6,5350.00,'Lunes a Sábado de 8:00 a 18:00',_binary '','../Img/R.png'),(5,6,2250.00,'Lunes a Viernes de 8:00 a 17:00',_binary '','../Img/logo1.png'),(6,6,3250.00,'Lunes a Viernes de 8:00 a 17:00',_binary '','../Img/logo1.png'),(7,7,7000.00,'Lunes a Sábados de 10:00 am - 07:00 pm',_binary '','../Img/R.png');
 /*!40000 ALTER TABLE `oferta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +107,7 @@ CREATE TABLE `puesto` (
   `Nombre` varchar(50) NOT NULL,
   `Descripcion` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +116,7 @@ CREATE TABLE `puesto` (
 
 LOCK TABLES `puesto` WRITE;
 /*!40000 ALTER TABLE `puesto` DISABLE KEYS */;
-INSERT INTO `puesto` VALUES (1,'Programador','Principales tareas de un programador'),(2,'Asistente de Base de Datos','Principales tareas de un Asistente de Base de Datos'),(3,'Administrador de Capital Humano','Contratación\r\nSeguimiento de procesos\r\nSelección y Reclutamiento'),(4,'Capital Humano JR','Seguimiento a procesos nuevos'),(5,'Prueba2','Descripción de la prueba 2');
+INSERT INTO `puesto` VALUES (6,'Programador PHP','Desarrollar sistemas en PHP\r\nDesarrollar estructuras de base de datos en MySQL\r\nManejo de credenciales de usuario'),(7,'Analista de amenazas en la red','Actualizar antivirus\r\nRevisar el tráfico de red\r\nActualizar servidores');
 /*!40000 ALTER TABLE `puesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +139,7 @@ CREATE TABLE `usuario` (
   UNIQUE KEY `Uk_Correo` (`Correo`),
   KEY `FK_UsuarioPerfil` (`IdPerfil`),
   CONSTRAINT `FK_UsuarioPerfil` FOREIGN KEY (`IdPerfil`) REFERENCES `perfil` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +148,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (5,'119020345','ROBERT ARTURO QUESADA BORBON','rquesada20345@ufide.ac.cr','40063',1),(12,'305230298','IGNACIO ENRIQUE VARGAS MENDOZA','ivargas30298@ufide.ac.cr','30298',2);
+INSERT INTO `usuario` VALUES (5,'119020345','ROBERT ARTURO QUESADA BORBON','rquesada20345@ufide.ac.cr','20345',1),(12,'305230298','IGNACIO ENRIQUE VARGAS MENDOZA','ivargas30298@ufide.ac.cr','30298',2),(13,'304590415','EDUARDO JOSE CALVO CASTILLO','ecalvo90415@ufide.ac.cr','90415',2),(14,'304590416','FRANCINI DE LOS ANGELES ROMERO ARAYA','ecalvo90416@ufide.ac.cr','90416',2);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,9 +168,11 @@ CREATE TABLE `usuario_oferta` (
   PRIMARY KEY (`Id`),
   KEY `FK_RELACION_USUARIO` (`IdUsuario`),
   KEY `FK_RELACION_OFERTA` (`IdOferta`),
+  KEY `FK_EstadosUsuarioOferta` (`Estado`),
+  CONSTRAINT `FK_EstadosUsuarioOferta` FOREIGN KEY (`Estado`) REFERENCES `estados` (`Id`),
   CONSTRAINT `FK_RELACION_OFERTA` FOREIGN KEY (`IdOferta`) REFERENCES `oferta` (`Id`),
   CONSTRAINT `FK_RELACION_USUARIO` FOREIGN KEY (`IdUsuario`) REFERENCES `usuario` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +181,7 @@ CREATE TABLE `usuario_oferta` (
 
 LOCK TABLES `usuario_oferta` WRITE;
 /*!40000 ALTER TABLE `usuario_oferta` DISABLE KEYS */;
-INSERT INTO `usuario_oferta` VALUES (1,12,2,'2025-03-19 20:43:43.000000',1);
+INSERT INTO `usuario_oferta` VALUES (6,12,5,'2025-04-02 20:47:12.000000',2),(7,13,5,'2025-04-02 20:48:53.000000',3),(9,12,4,'2025-04-09 18:47:27.000000',1),(10,12,6,'2025-04-09 18:47:33.000000',4),(11,12,7,'2025-04-09 19:17:28.000000',5);
 /*!40000 ALTER TABLE `usuario_oferta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,6 +234,29 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_ActualizarEstadoAplicacion` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ActualizarEstadoAplicacion`(pId bigint(11), pEstado int(11))
+BEGIN
+
+	UPDATE usuario_oferta
+	SET Estado = pEstado
+	WHERE Id = pId;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SP_ActualizarOferta` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -221,14 +271,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ActualizarOferta`(pId bigint(20)
 																  pIdPuesto bigint(20), 
 																  pSalario decimal(10,2), 
 																  pHorario varchar(255),
-                                                                  pEstado bit)
+                                                                  pEstado bit,
+                                                                  pImagen varchar(2500))
 BEGIN
 
 	UPDATE oferta
 	SET IdPuesto = pIdPuesto,
 		Salario = pSalario,
 		Horario = pHorario,
-        Estado = pEstado
+        Estado = pEstado,
+        Imagen = CASE WHEN pImagen = '' THEN Imagen ELSE pImagen END
 	WHERE Id = pId;
     
 END ;;
@@ -289,6 +341,74 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_AplicarOferta` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_AplicarOferta`(
+	pIdOferta 	bigint(11),
+	pIdUsuario  bigint(11)
+)
+BEGIN
+
+	DECLARE vCantidad INT;
+    DECLARE vResultado BOOL;
+    
+    SELECT 	COUNT(*) INTO vCantidad
+    FROM 	usuario_oferta
+    WHERE 	IdUsuario = pIdUsuario
+		AND IdOferta = pIdOferta;
+    
+    IF vCantidad = 0 THEN
+
+		INSERT INTO usuario_oferta(`IdUsuario`,`IdOferta`,`Fecha`,`Estado`)
+		VALUES (pIdUsuario, pIdOferta,NOW(),1);
+        
+        SET vResultado = true;
+
+	ELSE
+    
+		SET vResultado = false;
+
+	END IF;
+    
+    SELECT vResultado AS 'Resultado';
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_ConsultarEstados` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ConsultarEstados`()
+BEGIN
+
+	SELECT	Id,
+			Descripcion
+	FROM 	estados;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SP_ConsultarOferta` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -310,7 +430,8 @@ BEGIN
 			Horario,
             Estado,
             CASE WHEN Estado = 1 THEN 'Activo' ELSE 'Inactivo' END DescripcionEstado,
-            CASE WHEN Estado = 1 THEN 'checked' ELSE '' END IndicadorEstado
+            CASE WHEN Estado = 1 THEN 'checked' ELSE '' END IndicadorEstado,
+            Imagen
 	FROM 	oferta O
     INNER JOIN puesto P ON O.IdPuesto = P.Id
     WHERE O.Id = pId;
@@ -344,11 +465,69 @@ BEGIN
             P.Descripcion,
 			Salario,
 			Horario,
-            Estado,
-            CASE WHEN Estado = 1 THEN 'Activo' ELSE 'Inactivo' END DescripcionEstado
+            O.Estado,
+            CASE WHEN O.Estado = 1 THEN 'Activo' ELSE 'Inactivo' END DescripcionEstado,
+            Imagen,
+            COUNT(UO.IdOferta) AS CANTIDAD_APLICACIONES
 	FROM 	oferta O
     INNER JOIN puesto P ON O.IdPuesto = P.Id
-    WHERE Estado = IFNULL(pEstado,Estado);
+    LEFT JOIN usuario_oferta UO ON O.Id = UO.IdOferta
+    WHERE O.Estado = IFNULL(pEstado,O.Estado)
+    group by O.Id,
+			IdPuesto,
+            P.Nombre,
+            P.Descripcion,
+			Salario,
+			Horario,
+            O.Estado,
+            DescripcionEstado,
+            Imagen;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_ConsultarOfertasPopulares` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ConsultarOfertasPopulares`()
+BEGIN
+    
+    -- MUESTRA EL TOP 4 DE LAS OFERTAS MÁS APLICADAS 
+    SELECT  O.Id,
+			IdPuesto,
+            P.Nombre,
+            P.Descripcion,
+			Salario,
+			Horario,
+            O.Estado,
+            CASE WHEN O.Estado = 1 THEN 'Activo' ELSE 'Inactivo' END DescripcionEstado,
+            Imagen,
+            COUNT(UO.IdOferta) AS CANTIDAD_APLICACIONES
+	FROM 	oferta O
+    INNER JOIN puesto P ON O.IdPuesto = P.Id
+    LEFT JOIN usuario_oferta UO ON O.Id = UO.IdOferta
+    WHERE O.Estado = 1
+    group by O.Id,
+			IdPuesto,
+            P.Nombre,
+            P.Descripcion,
+			Salario,
+			Horario,
+            O.Estado,
+            DescripcionEstado,
+            Imagen
+	ORDER BY CANTIDAD_APLICACIONES DESC, O.SALARIO DESC
+    LIMIT 3;
 
 END ;;
 DELIMITER ;
@@ -369,13 +548,29 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ConsultarOfertasUsuario`(pId bigint(20))
 BEGIN
 
-	SELECT	Id,
+	IF pId = -1 THEN
+		SET pId = NULL;
+	END IF;
+
+	SELECT	UO.Id,
 			IdUsuario,
 			IdOferta,
 			Fecha,
-			Estado
-		FROM usuario_oferta
-	WHERE IdUsuario = pId;
+			E.Descripcion 'DescripcionEstado',
+            O.Salario, 
+			O.Horario,
+            O.Imagen,
+            P.Nombre,
+            P.Descripcion,
+            U.Nombre 'NombreUsuario',
+            UO.Estado
+		FROM usuario_oferta UO
+        INNER JOIN oferta O ON UO.IdOferta = O.Id
+        INNER JOIN puesto P ON O.IdPuesto = P.Id
+        INNER JOIN estados E ON UO.Estado = E.Id
+        INNER JOIN usuario U ON UO.IdUsuario = U.Id
+	WHERE IdUsuario = ifnull(pId,IdUsuario)
+    ORDER BY IdOferta;
     
 END ;;
 DELIMITER ;
@@ -472,11 +667,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_CrearOferta`(pIdPuesto bigint(20), pSalario decimal(10,2), pHorario varchar(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_CrearOferta`(pIdPuesto bigint(20), 
+															 pSalario decimal(10,2), 
+                                                             pHorario varchar(255),
+                                                             pImagen varchar(2500))
 BEGIN
 
-	INSERT INTO oferta(IdPuesto,Salario,Horario,Estado)
-	VALUES (pIdPuesto,pSalario,pHorario,1);
+	INSERT INTO oferta(IdPuesto,Salario,Horario,Estado,Imagen)
+	VALUES (pIdPuesto,pSalario,pHorario,1,pImagen);
 
 END ;;
 DELIMITER ;
@@ -635,4 +833,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-20  0:12:05
+-- Dump completed on 2025-04-09 21:11:59

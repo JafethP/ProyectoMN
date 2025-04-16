@@ -21,15 +21,23 @@
 
                 <div class="container-fluid">
 
-                <br></br>
-                <br></br>
+                    <h5>Consulta de Ofertas Disponibles</h5>
 
-                    <table class="table">
+                    <br /><br />
+
+                    <?php
+                                        if(isset($_POST["Message"]))
+                                        {
+                                            echo '<div class="alert alert-warning Mensajes">' . $_POST["Message"] . '</div>';                                   
+                                        }
+                                    ?>
+
+                    <table id="example" class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Puesto</th>
-                                <th>Descripción</th>
+                                <th>Cantidad de personas</th>
                                 <th>Salario</th>
                                 <th>Horario</th>
                                 <th>Acciones</th>
@@ -37,17 +45,26 @@
                         </thead>
                         <tbody>
                             <?php
-                                $datos = ConsultarOfertas();
+                                $datos = ConsultarOfertas(true);
 
-                                while($row = mysqli_fetch_array($datos))
+                                while($fila = mysqli_fetch_array($datos))
                                 {
                                     echo "<tr>";
-                                    echo "<td>" . $row["Id"] . "</td>";
-                                    echo "<td>" . $row["Nombre"] . "</td>";
-                                    echo "<td>" . $row["Descripcion"] . "</td>";
-                                    echo "<td>" . $row["Salario"] . "</td>";
-                                    echo "<td>" . $row["Horario"] . "</td>";
-                                    echo "<td><input type='button' class= 'btn btn-outline-primary' value= 'Ver Detalle'>"
+                                    echo "<td>" . $fila["Id"] . "</td>";
+                                    echo "<td>" . $fila["Nombre"] . "</td>";
+                                    echo "<td>" . $fila["CANTIDAD_APLICACIONES"] . "</td>";
+                                    echo "<td> $ " . $fila["Salario"] . "</td>";
+                                    echo "<td>" . $fila["Horario"] . "</td>";
+                                    echo '<td>
+                                            <button id="btnAplicarOferta" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+                                                        data-idOferta="' . $fila["Id"] . '"
+                                                        data-nombre="' . $fila["Nombre"] . '"
+                                                        data-desc="' . $fila["Descripcion"] . '"
+                                                        data-salario="' . $fila["Salario"] . '"
+                                                        data-horario="' . $fila["Horario"] . '">
+                                                        APLICAR
+                                                    </button>
+                                            </td>';
                                     echo "</tr>";
                                 }
                             ?>
@@ -67,28 +84,58 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Desea salir del sistema?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">X</span>
+                    <h5 class="modal-title" id="exampleModalLongTitle"><label id="lblNombre"></label></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">Presione el botón Salir para finalizar su sesión actual</div>
-                <div class="modal-footer">
-                    <form action="" method="POST">
-                        <input type="submit" class="btn btn-primary" id="btnSalir" name="btnSalir"
-                            value="Salir"></input>
-                    </form>
-                </div>
+
+                <form action="" method="POST">
+
+                    <div class="modal-body">
+                        <input type="hidden" id="txtIdOferta" name="txtIdOferta">
+                        <textarea id="txtDescripcion" rows="10" readonly="true" class="form-control"
+                            style="resize:none; background-color:transparent;"></textarea><br />
+                        Salario: $ <label id="lblSalario"></label> <br />
+                        Horario: <label id="lblHorario"></label> <br />
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnAplicarOfertaPopular" name="btnAplicarOfertaPopular" type="submit"
+                            class="btn btn-primary">Confirmar</button>
+                    </div>
+
+                </form>
+
             </div>
         </div>
     </div>
 
     <?php PrintScript(); ?>
+    <script src="../Scripts/jquery.min.js"></script>
+    <script src="../Scripts/aplicarOferta.js"></script>
+    <script>
+    $(document).ready(function() {
+        var table = new DataTable('#example', {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json',
+            },
+            columnDefs: [{
+                targets: "_all",
+                className: "dt-left"
+            }],
+            order: [
+                [2, "desc"],
+                [3, "desc"]
+            ]
+        });
+    });
+    </script>
 
 </body>
 

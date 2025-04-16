@@ -12,6 +12,7 @@
 
     <div class="container MargenSuperior">
 
+        <!-- Outer Row -->
         <div class="row justify-content-center">
 
             <div class="col-xl-10 col-lg-12 col-md-9">
@@ -61,6 +62,13 @@
 
         </div>
 
+    </div>
+
+    <?php PrintScript(); ?>
+
+</body>
+
+</html>
     </div>
 
     <?php PrintScript(); ?>
